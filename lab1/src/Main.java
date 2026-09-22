@@ -7,13 +7,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Integer n = null;
 
+        System.out.println("Enter n: ");
         while (n == null) {
-            System.out.println("Enter n: ");
             String line = scanner.nextLine();
             try {
                 n = readNumber(line);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Invalid number. Enter again:");
             }
         }
 
