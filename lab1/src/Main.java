@@ -5,25 +5,25 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int n = 0;
-        boolean valid = false;
+        int n = readN(scanner);
+        System.out.println(findMaxZeroCount(n));
+    }
 
-        while (!valid) {
+    public static int readN(Scanner scanner) {
+        while (true) {
             System.out.println("Enter n: ");
             String line = scanner.nextLine();
             try {
-                n = Integer.parseInt(line.trim());
+                int n = Integer.parseInt(line.trim());
                 if (n < 2) {
                     System.out.println("Error: n must be an integer greater than or equal to 2. Try again.");
                     continue;
                 }
-                valid = true;
+                return n;
             } catch (NumberFormatException e) {
                 System.out.println("Error: \"" + line + "\" is not a valid integer. Try again.");
             }
         }
-
-        System.out.println(findMaxZeroCount(n));
     }
 
     public static boolean isPrime(int n) {
