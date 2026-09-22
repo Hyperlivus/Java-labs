@@ -1,14 +1,29 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter n: ");
-        String line = scanner.nextLine();
-        int n = Integer.parseInt(line);
-        System.out.println(findMaxBinary(n));
+        int n = 0;
+        boolean valid = false;
 
+        while (!valid) {
+            System.out.println("Enter n: ");
+            String line = scanner.nextLine();
+            try {
+                n = Integer.parseInt(line.trim());
+                if (n < 2) {
+                    System.out.println("Error: n must be an integer greater than or equal to 2. Try again.");
+                    continue;
+                }
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: \"" + line + "\" is not a valid integer. Try again.");
+            }
+        }
+
+        System.out.println(findMaxZeroCount(n));
     }
 
     public static boolean isPrime(int n) {
@@ -19,8 +34,36 @@ public class Main {
         }
         return true;
     }
-    public static int findMaxBinary(int n) {
-        double log2 = Math.floor(Math.log(n) / Math.log(2));
-        return (int)Math.pow(2, log2);
+    public static ArrayList<Integer> getAllPrimes(int n) {
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i = 2; i < n; i ++) {
+            if (isPrime(i)) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public static int calculateZeroCount(int n) {
+        int i = n;
+        int result = 0;
+
+        while (i != 0) {
+            int x = i & 0b1;
+            if (x == 0) result++;
+            i = i >> 1;
+        }
+
+        return result;
+    }
+    public static int findMaxZeroCount(int n) {
+        ArrayList<Integer> primes = getAllPrimes(n);
+        int result = primes.get(0);
+
+        for (int prime : primes) {
+            if (calculateZeroCount(result) < calculateZeroCount(prime)) {
+                result = prime;
+            }
+        }
+        return result;
     }
 }
