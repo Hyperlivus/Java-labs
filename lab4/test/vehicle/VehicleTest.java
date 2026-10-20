@@ -75,7 +75,7 @@ class VehicleTest {
         PoliceCar policeCar = new PoliceCar(1);
         policeCar.addPassenger(new Policeman("Oleh", 40));
 
-        assertThrows(Exception.class, () -> policeCar.addPassenger(new Policeman("Taras", 33)));
+        assertThrows(VehicleOverfilledException.class, () -> policeCar.addPassenger(new Policeman("Taras", 33)));
         assertEquals(1, policeCar.getPassengersCount());
     }
 
@@ -83,7 +83,7 @@ class VehicleTest {
     void vehicleWithZeroSeatsRejectsPassengers() {
         Bus bus = new Bus(0);
 
-        assertThrows(Exception.class, () -> bus.addPassenger(new Person("Ivan", 30, "Teacher")));
+        assertThrows(VehicleOverfilledException.class, () -> bus.addPassenger(new Person("Ivan", 30, "Teacher")));
         assertEquals(0, bus.getPassengersCount());
     }
 
@@ -105,7 +105,7 @@ class VehicleTest {
         Bus bus = new Bus(2);
         bus.addPassenger(new Person("Ivan", 30, "Teacher"));
 
-        assertThrows(Exception.class, () -> bus.removePassenger(new Fireman("Petro", 35)));
+        assertThrows(PassengerNotFoundException.class, () -> bus.removePassenger(new Fireman("Petro", 35)));
         assertEquals(1, bus.getPassengersCount());
     }
 
@@ -113,7 +113,7 @@ class VehicleTest {
     void removeNullPassengerThrows() {
         Taxi taxi = new Taxi(2);
 
-        assertThrows(Exception.class, () -> taxi.removePassenger(null));
+        assertThrows(PassengerNotFoundException.class, () -> taxi.removePassenger(null));
     }
 
     @Test

@@ -13,16 +13,16 @@ public abstract class Vehicle<T extends Person> {
         this.passengers = new HashSet<>();
     }
 
-    public void addPassenger(T person) throws Exception {
+    public void addPassenger(T person) throws VehicleOverfilledException {
         if (this.passengers.size() + 1 > this.maxPassengersCount) {
-            throw new Exception("vehicle overfilled");
+            throw new VehicleOverfilledException();
         }
 
         this.passengers.add(person);
     }
-    public void removePassenger(T person) throws Exception {
+    public void removePassenger(T person) throws PassengerNotFoundException {
         if (person == null || !this.passengers.contains(person)) {
-            throw new Exception();
+            throw new PassengerNotFoundException();
         }
 
         this.passengers.remove(person);
